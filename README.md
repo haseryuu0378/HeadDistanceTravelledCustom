@@ -3,7 +3,7 @@ denpadokeiさんが作成した「HeadDistanceTravelled」に機能を追加し�
 アセンブリ名は元と同じ「HeadDistanceTravelled.dll」です。  
 元レポジトリ：https://github.com/denpadokei/HeadDistanceTravelled/releases/tag/0.1.0-rc10  
 
-デフォの状態では機能はそのまま使用可能です。  
+デフォの状態では元の機能部分はそのままで使用可能です。  
 
 ## 追加機能  
 ### 機能①  
