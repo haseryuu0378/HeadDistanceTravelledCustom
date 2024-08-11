@@ -1,6 +1,7 @@
 # HeadDistanceTravelledCustom  
 denpadokeiさんが作成した「HeadDistanceTravelled」に機能を追加したカスタム版です。  
 アセンブリ名は元と同じ「HeadDistanceTravelled.dll」です。  
+元のMODを適用した後、アセンブリを置き換えてください。
 元レポジトリ：https://github.com/denpadokei/HeadDistanceTravelled/releases/tag/0.1.0-rc10  
 
 デフォの状態では機能はそのまま使用可能です。  
