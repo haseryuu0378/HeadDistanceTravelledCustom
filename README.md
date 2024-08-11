@@ -5,16 +5,16 @@ denpadokeiさんが作成した「HeadDistanceTravelled」に機能を追加し�
 
 デフォの状態では機能はそのまま使用可能です。  
 
-##追加機能  
-###機能①  
+## 追加機能  
+### 機能①  
 譜面プレイ終了時「%userprofile%\appdata\LocalLow\Hyperbolic Magnetism\Beat Saber\」フォルダに「HMDDistanceResult.txt」ファイルを作成します。  
 OBSのテキストソースで表示すると、譜面プレイ終了時にプレイ記録を表示できます。  
 内容：前プレイの距離：〇〇m　今回の総距離：〇〇m  
 
-###機能②  
+### 機能②  
 譜面プレイ中のDistance表示を頭の上から別の場所に固定表示できます。  
 
-##設定ファイル詳細  
+## 設定ファイル詳細  
 ゲーム起動時「UserData」フォルダにある「HeadDistanceTravelledCustom.json」を作成します。  
 存在しない場合、初期設定ファイルを作成します。  
 
