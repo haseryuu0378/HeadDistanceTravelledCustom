@@ -41,3 +41,7 @@ HDTPosY:0.1
 HDTPosZ":1.2  
 →HDTPosFixをTrueに設定した場合の距離表示の座標  
 　初期の状態で正面下部に表示します。  
+
+## 注意事項
+「HMDDistanceResult.txt」及び「HeadDistanceTravelledCustom.json」が指定のフォルダに存在しない場合は
+1曲プレイし、終了後に確認してみてください。
