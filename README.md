@@ -45,3 +45,10 @@ HDTPosZ":1.2
 ## 注意事項
 「HMDDistanceResult.txt」及び「HeadDistanceTravelledCustom.json」が指定のフォルダに存在しない場合は
 1曲プレイし、終了後に確認してみてください。
+
+## 変更履歴
+0.1.1
+* HeadDistanceTravelled-0.1.1-bs1.20.0 対応版
+
+0.1.0
+* 初期ビルド

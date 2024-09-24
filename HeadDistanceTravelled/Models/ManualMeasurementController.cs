@@ -1,4 +1,5 @@
-﻿using HeadDistanceTravelled.Databases;
+﻿using HeadDistanceTravelled.Configuration;
+using HeadDistanceTravelled.Databases;
 using HeadDistanceTravelled.Databases.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using Zenject;
 
 namespace HeadDistanceTravelled.Models
 {
-    internal class ManualMeasurementController : IInitializable, IDisposable
+    public class ManualMeasurementController : IInitializable, IDisposable
     {
         public enum MeasurementStatus
         {
@@ -29,9 +30,10 @@ namespace HeadDistanceTravelled.Models
         #endregion
         //ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*
         #region // コマンド
-        #endregion
-        //ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*
-        #region // コマンド用メソッド
+        public event Action<ManualMeasurementController> OnStarted;
+        public event Action<ManualMeasurementController> OnStopped;
+        public event Action<ManualMeasurementController> OnSaved;
+        public event Action<ManualMeasurementController> OnConfigLoaded;
         #endregion
         //ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*
         #region // オーバーライドメソッド
@@ -46,6 +48,8 @@ namespace HeadDistanceTravelled.Models
             this.CurrentSessionGUID = Guid.NewGuid();
             this.MeasurementStatusValue = MeasurementStatus.Measuring;
             this.StartDateTime = DateTime.Now;
+            PluginConfig.Instance.MeasurementStatusValue = this.MeasurementStatusValue;
+            this.OnStarted?.Invoke(this);
         }
 
         public void Stop()
@@ -56,12 +60,40 @@ namespace HeadDistanceTravelled.Models
             this.CurrentSessionGUID = Guid.Empty;
             this.MeasurementStatusValue = MeasurementStatus.NotMeasuring;
             this.StartDateTime = DateTime.MinValue;
+            PluginConfig.Instance.MeasurementStatusValue = this.MeasurementStatusValue;
+            this.OnStopped?.Invoke(this);
         }
 
         public void Reset()
         {
             this.Stop();
             this.Start();
+        }
+
+        public void LoadConfig()
+        {
+            switch (PluginConfig.Instance.MeasurementStatusValue) {
+                case MeasurementStatus.Measuring:
+                    if (this.MeasurementStatusValue == MeasurementStatus.Measuring) {
+                        break;
+                    }
+                    var lastInfo = _database.RawDatabase.GetCollection<ManualMeasurement>().FindAll().OrderByDescending(x => x.StartDate).FirstOrDefault();
+                    if (lastInfo == null) {
+                        this.Stop();
+                    }
+                    else {
+                        this.CurrentSessionGUID = lastInfo.SessionGUID;
+                        this.MeasurementStatusValue = MeasurementStatus.Measuring;
+                        this.StartDateTime = lastInfo.StartDate;
+                    }
+                    break;
+                case MeasurementStatus.NotMeasuring:
+                    this.Stop();
+                    break;
+                default:
+                    break;
+            }
+            this.OnConfigLoaded?.Invoke(this);
         }
 
         public float GetTotalDistance(Guid sessionGuid)
@@ -89,6 +121,12 @@ namespace HeadDistanceTravelled.Models
                 StartDate = this.StartDateTime,
             };
             _database.Insert(info);
+            try {
+                this.OnSaved?.Invoke(this);
+            }
+            catch (Exception e) {
+                Plugin.Log.Error(e);
+            }
         }
         #endregion
         //ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*
@@ -111,6 +149,7 @@ namespace HeadDistanceTravelled.Models
         public void Initialize()
         {
             this.Stop();
+            this.LoadConfig();
         }
 
         protected virtual void Dispose(bool disposing)

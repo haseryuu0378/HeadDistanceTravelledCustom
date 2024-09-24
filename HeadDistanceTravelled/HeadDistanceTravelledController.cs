@@ -51,6 +51,7 @@ namespace HeadDistanceTravelled
         //ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*
         #region // イベント
         public event HMDDistanceChangedEventHandler OnDistanceChanged;
+        public event Action<IHeadDistanceTravelledController> OnDestroied;
         #endregion
         //ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*
         #region // メンバ変数
@@ -181,6 +182,12 @@ namespace HeadDistanceTravelled
 
             Plugin.Log.Info($"Id={info.ID}");
             this._manualMeasurementController.Save(info);
+            try {
+                this.OnDestroied?.Invoke(this);
+            }
+            catch (Exception e) {
+                Plugin.Log.Error(e);
+            }
 
             var totalDistance = _hDTDatabase.Find<DistanceInformation>(x => x.CreatedAt >= StartDt).Sum(x => x.Distance);
             var preDistance = _hDTDatabase.Find<DistanceInformation>(x => x.CreatedAt >= StartDt).OrderByDescending(x => x.CreatedAt).FirstOrDefault().Distance;
