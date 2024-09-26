@@ -49,6 +49,9 @@ HDTPosZ":1.2
 ## 変更履歴
 0.1.1
 * HeadDistanceTravelled-0.1.1-bs1.20.0 対応版
+* HeadDistanceTravelledCustom.json のインデント対応
+　※ファイルが既に存在する場合は、設定そのままにインデント対応版に変換されます。
+* HMDDistance.litedb データ更新後にDB再接続（外部ツール用対応）
 
 0.1.0
 * 初期ビルド
