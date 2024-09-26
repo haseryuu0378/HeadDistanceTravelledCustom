@@ -12,8 +12,14 @@ namespace HeadDistanceTravelled
 
         public static void TextOutResult(string TotalDistance, string PreDistance, string ResultFormat)
         {
-            var text = string.Format(ResultFormat, TotalDistance, PreDistance);
-            File.WriteAllText(outPath, text);
+            try {
+                var text = string.Format(ResultFormat, TotalDistance, PreDistance);
+                File.WriteAllText(outPath, text);
+            }
+            catch (Exception e) {
+                Plugin.Log.Error(e);
+            }
+
         }
 
         public static string TextOutResultCheck(string TotalDistance, string PreDistance, string ResultFormat)

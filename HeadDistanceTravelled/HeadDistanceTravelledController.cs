@@ -180,6 +180,8 @@ namespace HeadDistanceTravelled
             info.BeatmapCharacteristicTextId = include ? bc.ID : unknownBc.ID;
             var inserted = _hDTDatabase.Insert(info);
 
+            _hDTDatabase.ReConect();
+
             Plugin.Log.Info($"Id={info.ID}");
             this._manualMeasurementController.Save(info);
             try {

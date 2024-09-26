@@ -23,6 +23,9 @@ namespace HeadDistanceTravelled.Jsons
                 string jsonData = File.ReadAllText(configurationFile);
                 ConfData = JsonConvert.DeserializeObject<ConfigData>(jsonData);
 
+                var jsonWriteData = JsonConvert.SerializeObject(ConfData, Formatting.Indented);
+                File.WriteAllText(configurationFile, jsonWriteData);
+
                 if (ConfData.StartDt is null) {
                     ConfData.StartDt = dateDt;
                 }
@@ -35,7 +38,7 @@ namespace HeadDistanceTravelled.Jsons
                 ConfData.HDTPosX = 0;
                 ConfData.HDTPosY = 0.1f;
                 ConfData.HDTPosZ = 1.2f;
-                var jsonWriteData = JsonConvert.SerializeObject(ConfData);
+                var jsonWriteData = JsonConvert.SerializeObject(ConfData ,Formatting.Indented);
                 File.WriteAllText(configurationFile, jsonWriteData);
 
                 ConfData.StartDt = dateDt;

@@ -98,6 +98,11 @@ namespace HeadDistanceTravelled.Databases
             }
         }
 
+        public void ReConect()
+        {
+            Connect();
+        }
+
         private void DisConnect()
         {
             lock (_lock) {

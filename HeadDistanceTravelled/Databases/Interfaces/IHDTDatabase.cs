@@ -14,5 +14,6 @@ namespace HeadDistanceTravelled.Databases.Interfaces
         void InsertBulk<T>(IEnumerable<T> enties);
         void SetDefaultValue();
         void Update<T>(T entity);
+        void ReConect();
     }
 }
