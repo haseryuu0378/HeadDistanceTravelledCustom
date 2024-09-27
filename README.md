@@ -33,10 +33,12 @@ ResultFormat:"前プレイの距離：{1}m　今回の総距離：{0}m"
 　例：「前プレイの距離：{1}m」にした場合は、今回の総距離は表示されません。  
 
 HiddenPlaying:false　※0.1.1 追加  
-　→ trueにした場合、プレイ開始時に「HMDDistanceResult.txt」を空白にします。  
-　　メニューに戻ると「HMDDistanceResult.txt」が入力されます。  
-　　※プレイ中、OBSに「HMDDistanceResult.txt」を表示したくない場合、シーン変更しなくても対応できます。  
-
+　→「HMDDistanceResult.txt」をプレイ中に空白にするかのフラグ  
+　　true→プレイ開始時に「HMDDistanceResult.txt」を空白にします。  
+　　　メニューに戻ると「HMDDistanceResult.txt」が入力されます。  
+　　　※プレイ中、OBSに「HMDDistanceResult.txt」を表示したくない場合、シーン変更しなくても対応できます。  
+　　false→「HMDDistanceResult.txt」は常に入力された状態になります。OBS側で常に表示したいときはこちら。
+ 
 HDTPosFix:false  
 　→プレイ中の距離表示を固定するかのフラグ  
 　　false→通常の状況（頭の上に追従します）  
