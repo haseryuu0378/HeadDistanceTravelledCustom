@@ -138,6 +138,7 @@ namespace HeadDistanceTravelled
         public void Start()
         {
             CustomConfig = new CustomConfig(DateTime.Now);
+            TextOutResultController.HiddenPlaying = CustomConfig.ConfData.HiddenPlaying;
             if (StartDt is null) {
                 StartDt = CustomConfig.ConfData.StartDt;
             }
@@ -147,6 +148,8 @@ namespace HeadDistanceTravelled
         }
         public void Update()
         {
+            TextOutResultController.TextOutResultHiddenPlaying();
+
             if (this._isPause) {
                 this._platformHelper.GetNodePose(XRNode.Head, 0, out this._prevHMDPosition, out _);
                 return;
@@ -179,8 +182,6 @@ namespace HeadDistanceTravelled
             var unknownBc = _hDTDatabase.Find<BeatmapCharacteristicText>(x => x.BeatmapCharacteristicEnumValue == BeatmapCharacteristic.UnknownValue).FirstOrDefault();
             info.BeatmapCharacteristicTextId = include ? bc.ID : unknownBc.ID;
             var inserted = _hDTDatabase.Insert(info);
-
-            _hDTDatabase.ReConect();
 
             Plugin.Log.Info($"Id={info.ID}");
             this._manualMeasurementController.Save(info);

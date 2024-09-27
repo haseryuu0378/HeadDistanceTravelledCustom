@@ -38,6 +38,7 @@ namespace HeadDistanceTravelled.Jsons
                 ConfData.HDTPosX = 0;
                 ConfData.HDTPosY = 0.1f;
                 ConfData.HDTPosZ = 1.2f;
+                ConfData.HiddenPlaying = false;
                 var jsonWriteData = JsonConvert.SerializeObject(ConfData ,Formatting.Indented);
                 File.WriteAllText(configurationFile, jsonWriteData);
 
@@ -55,6 +56,9 @@ namespace HeadDistanceTravelled.Jsons
 
             [JsonProperty("ResultFormat")]
             public string ResultFormat { get; set; }
+
+            [JsonProperty("HiddenPlaying")]
+            public bool HiddenPlaying { get; set; }
 
             [JsonProperty("HDTPosFix")]
             public bool HDTPosFix { get; set; }
