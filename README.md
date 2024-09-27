@@ -32,6 +32,11 @@ ResultFormat:"前プレイの距離：{1}m　今回の総距離：{0}m"
 　その他文字列はそのまま出力されます。  
 　例：「前プレイの距離：{1}m」にした場合は、今回の総距離は表示されません。  
 
+HiddenPlaying:false　※0.1.1 追加  
+　→ trueにした場合、プレイ開始時に「HMDDistanceResult.txt」を空白にします。  
+　　メニューに戻ると「HMDDistanceResult.txt」が入力されます。  
+　　※プレイ中、OBSに「HMDDistanceResult.txt」を表示したくない場合、シーン変更しなくても対応できます。  
+
 HDTPosFix:false  
 　→プレイ中の距離表示を固定するかのフラグ  
 　　false→通常の状況（頭の上に追従します）  
@@ -49,9 +54,10 @@ HDTPosZ":1.2
 ## 変更履歴
 0.1.1
 * HeadDistanceTravelled-0.1.1-bs1.20.0 対応版
-* HeadDistanceTravelledCustom.json のインデント対応
-　※ファイルが既に存在する場合は、設定そのままにインデント対応版に変換されます。
-* HMDDistance.litedb データ更新後にDB再接続（外部ツール用対応）
+* HeadDistanceTravelledCustom.json のインデント対応  
+※ファイルが既に存在する場合は、設定そのままにインデント対応版に変換されます。  
+* 「HeadDistanceTravelledCustom.json」に”HiddenPlaying”プロパティの追加。  
+※ファイルが既に存在する場合は、falseで追加されます。  
 
 0.1.0
 * 初期ビルド
