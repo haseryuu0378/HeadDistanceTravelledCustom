@@ -15,7 +15,7 @@ OBSのテキストソースで表示すると、譜面プレイ終了時にプ�
 譜面プレイ中のDistance表示を頭の上から別の場所に固定表示できます。  
 
 ## 設定ファイル詳細  
-ゲーム起動時「UserData」フォルダにある「HeadDistanceTravelledCustom.json」を作成します。  
+設定ファイルは「UserData」フォルダに「HeadDistanceTravelledCustom.json」にあります。  
 存在しない場合、初期設定ファイルを作成します。  
 
 StartDt:null  
