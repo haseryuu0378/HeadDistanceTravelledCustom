@@ -1,9 +1,9 @@
 # HeadDistanceTravelledCustom  
 denpadokeiさんが作成した「HeadDistanceTravelled」に機能を追加したカスタム版です。  
 アセンブリ名は元と同じ「HeadDistanceTravelled.dll」です。  
-元レポジトリ：https://github.com/denpadokei/HeadDistanceTravelled/releases/tag/0.1.0-rc10  
+元レポジトリ：https://github.com/denpadokei/HeadDistanceTravelled  
 
-デフォの状態では元の機能部分はそのままで使用可能です。  
+デフォの状態では元の機能部分をそのまま使用できます。  
 
 ## 追加機能  
 ### 機能①  
@@ -15,7 +15,7 @@ OBSのテキストソースで表示すると、譜面プレイ終了時にプ�
 譜面プレイ中のDistance表示を頭の上から別の場所に固定表示できます。  
 
 ## 設定ファイル詳細  
-ゲーム起動時「UserData」フォルダにある「HeadDistanceTravelledCustom.json」を作成します。  
+設定ファイルは「UserData」フォルダに「HeadDistanceTravelledCustom.json」にあります。  
 存在しない場合、初期設定ファイルを作成します。  
 
 StartDt:null  
@@ -33,10 +33,12 @@ ResultFormat:"前プレイの距離：{1}m　今回の総距離：{0}m"
 　例：「前プレイの距離：{1}m」にした場合は、今回の総距離は表示されません。  
 
 HiddenPlaying:false　※0.1.1 追加  
-　→ trueにした場合、プレイ開始時に「HMDDistanceResult.txt」を空白にします。  
-　　メニューに戻ると「HMDDistanceResult.txt」が入力されます。  
-　　※プレイ中、OBSに「HMDDistanceResult.txt」を表示したくない場合、シーン変更しなくても対応できます。  
-
+　→「HMDDistanceResult.txt」をプレイ中に空白にするかのフラグ  
+　　true→プレイ開始時に「HMDDistanceResult.txt」を空白にします。  
+　　　メニューに戻ると「HMDDistanceResult.txt」が入力されます。  
+　　　※プレイ中、OBSに「HMDDistanceResult.txt」を表示したくない場合、シーン変更しなくても対応できます。  
+　　false→「HMDDistanceResult.txt」は常に入力された状態になります。OBS側で常に表示したいときはこちら。
+ 
 HDTPosFix:false  
 　→プレイ中の距離表示を固定するかのフラグ  
 　　false→通常の状況（頭の上に追従します）  
