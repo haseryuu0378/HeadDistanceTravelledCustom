@@ -1,12 +1,8 @@
-﻿using BeatSaberMarkupLanguage;
-using BeatSaberMarkupLanguage.Attributes;
+﻿using BeatSaberMarkupLanguage.Attributes;
 using BeatSaberMarkupLanguage.Components;
-using BeatSaberMarkupLanguage.ViewControllers;
 using HeadDistanceTravelled.Configuration;
 using HeadDistanceTravelled.Models;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using TMPro;

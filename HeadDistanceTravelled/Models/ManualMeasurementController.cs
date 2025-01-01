@@ -4,7 +4,6 @@ using HeadDistanceTravelled.Databases.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Zenject;
 
 namespace HeadDistanceTravelled.Models
@@ -29,7 +28,7 @@ namespace HeadDistanceTravelled.Models
         public MeasurementStatus MeasurementStatusValue { get; set; } = MeasurementStatus.NotMeasuring;
         #endregion
         //ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*
-        #region // コマンド
+        #region // イベント
         public event Action<ManualMeasurementController> OnStarted;
         public event Action<ManualMeasurementController> OnStopped;
         public event Action<ManualMeasurementController> OnSaved;

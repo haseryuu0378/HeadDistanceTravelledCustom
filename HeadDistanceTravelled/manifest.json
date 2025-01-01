@@ -2,8 +2,8 @@
   "$schema": "https://raw.githubusercontent.com/bsmg/BSIPA-MetadataFileSchema/master/Schema.json",
   "id": "HeadDistanceTravelled",
   "name": "HeadDistanceTravelled",
-  "author": "",
-  "version": "0.1.1",
+  "author": "denpadokei, haseri",
+  "version": "0.1.2",
   "description": "",
   "gameVersion": "1.20.0",
   "dependsOn": {

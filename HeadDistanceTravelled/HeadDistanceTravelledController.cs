@@ -2,10 +2,8 @@
 using HeadDistanceTravelled.Databases.Interfaces;
 using HeadDistanceTravelled.Jsons;
 using HeadDistanceTravelled.Models;
-using IPA.Utilities;
 using SiraUtil.Tools.FPFC;
 using System;
-using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.XR;
@@ -78,7 +76,8 @@ namespace HeadDistanceTravelled
         //ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*
         #region // 構築・破棄
         [Inject]
-        public void Constractor(IVRPlatformHelper helper, IGamePause pauseController, IAudioTimeSource timeSource, IReadonlyBeatmapData readonlyBeatmapData, IHDTDatabase hDTDatabase, GameplayCoreSceneSetupData gameplayCoreSceneSetupData, IFPFCSettings fpfc, ManualMeasurementController manualMeasurementController)        {
+        public void Constractor(IVRPlatformHelper helper, IGamePause pauseController, IAudioTimeSource timeSource, IReadonlyBeatmapData readonlyBeatmapData, IHDTDatabase hDTDatabase, GameplayCoreSceneSetupData gameplayCoreSceneSetupData, IFPFCSettings fpfc, ManualMeasurementController manualMeasurementController)        
+        {
             this._platformHelper = helper;
             this._pauseController = pauseController;
             this._audioTimeSource = timeSource;
@@ -87,13 +86,8 @@ namespace HeadDistanceTravelled
             this._manualMeasurementController = manualMeasurementController;
             this._hDTDatabase = hDTDatabase;
             // ライトショーとかやられるとマジ死ぬ
-#if VER_1_20_0
             var firstNote = readonlyBeatmapData.allBeatmapDataItems.OfType<NoteData>().FirstOrDefault();
             var lastNote = readonlyBeatmapData.allBeatmapDataItems.OfType<NoteData>().LastOrDefault();
-#else
-            var firstNote = gameplayCoreSceneSetupData.difficultyBeatmap.beatmapData.beatmapObjectsData.OrderBy(x => x.time).OfType<NoteData>().FirstOrDefault();
-            var lastNote = gameplayCoreSceneSetupData.difficultyBeatmap.beatmapData.beatmapObjectsData.OrderBy(x => x.time).OfType<NoteData>().LastOrDefault();
-#endif
             if (firstNote != null) {
                 this._startTime = firstNote.time;
             }
@@ -104,12 +98,7 @@ namespace HeadDistanceTravelled
                 this._endTime = lastNote.time;
             }
             else {
-#if VER_1_20_0
                 this._endTime = this._audioTimeSource.songLength;
-#else
-                this._endTime = this._audioTimeSource.songEndTime;
-#endif
-
             }
             this._pauseController.didPauseEvent += this.OnDidPauseEvent;
             this._pauseController.didResumeEvent += this.OnDidResumeEvent;
@@ -120,7 +109,6 @@ namespace HeadDistanceTravelled
             else {
                 this._isfpfc = false;
             }
-
         }
 
         /// <summary>
@@ -165,7 +153,6 @@ namespace HeadDistanceTravelled
         }
         public void OnDestroy()
         {
-
             this._pauseController.didPauseEvent -= this.OnDidPauseEvent;
             this._pauseController.didResumeEvent -= this.OnDidResumeEvent;
             this._fpfc.Changed -= this.OnFPFCChanged;
@@ -182,7 +169,6 @@ namespace HeadDistanceTravelled
             var unknownBc = _hDTDatabase.Find<BeatmapCharacteristicText>(x => x.BeatmapCharacteristicEnumValue == BeatmapCharacteristic.UnknownValue).FirstOrDefault();
             info.BeatmapCharacteristicTextId = include ? bc.ID : unknownBc.ID;
             var inserted = _hDTDatabase.Insert(info);
-
             Plugin.Log.Info($"Id={info.ID}");
             this._manualMeasurementController.Save(info);
             try {
@@ -202,8 +188,6 @@ namespace HeadDistanceTravelled
             //var checktext = TextOutResultController.TextOutResultCheck(totalDistance.ToString(), preDistance.ToString(), CustomConfig.ConfData.ResultFormat);
             //Plugin.Log.Info($"HeadDistanceTravelledCustom={checktext}");
         }
-
         #endregion
-
     }
 }
