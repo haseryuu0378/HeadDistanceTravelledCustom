@@ -3,6 +3,8 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <AssemblyVersion>2.0.1</AssemblyVersion>
     <FileVersion>2.0.1</FileVersion>
+    <VersionPrefix>0.1.0</VersionPrefix>
+    <PackageVersion>0.1.0</PackageVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
