@@ -63,7 +63,9 @@ namespace HeadDistanceTravelled
         private float _endTime;
         private IAudioTimeSource _audioTimeSource;
         private IVRPlatformHelper _platformHelper;
-        private IDifficultyBeatmap _difficultyBeatmap;
+        private BeatmapLevel _beatmapLevel;
+        private BeatmapKey _key;
+        private IReadonlyBeatmapData _readonlyBeatmapData;
         private IFPFCSettings _fpfc;
         private bool _isfpfc;
         private bool _isPause;
@@ -76,12 +78,14 @@ namespace HeadDistanceTravelled
         //ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*ﾟ+｡｡+ﾟ*｡+ﾟ ﾟ+｡*
         #region // 構築・破棄
         [Inject]
-        public void Constractor(IVRPlatformHelper helper, IGamePause pauseController, IAudioTimeSource timeSource, IReadonlyBeatmapData readonlyBeatmapData, IHDTDatabase hDTDatabase, GameplayCoreSceneSetupData gameplayCoreSceneSetupData, IFPFCSettings fpfc, ManualMeasurementController manualMeasurementController)        
+        public void Constractor(IVRPlatformHelper helper, IGamePause pauseController, IAudioTimeSource timeSource, IHDTDatabase hDTDatabase, IReadonlyBeatmapData readonlyBeatmapData, GameplayCoreSceneSetupData gameplayCoreSceneSetupData, IFPFCSettings fpfc, ManualMeasurementController manualMeasurementController)
         {
             this._platformHelper = helper;
             this._pauseController = pauseController;
             this._audioTimeSource = timeSource;
-            this._difficultyBeatmap = gameplayCoreSceneSetupData.difficultyBeatmap;
+            this._key = gameplayCoreSceneSetupData.beatmapKey;
+            this._beatmapLevel = gameplayCoreSceneSetupData.beatmapLevel;
+            this._readonlyBeatmapData = readonlyBeatmapData;
             this._fpfc = fpfc;
             this._manualMeasurementController = manualMeasurementController;
             this._hDTDatabase = hDTDatabase;
@@ -158,13 +162,13 @@ namespace HeadDistanceTravelled
             this._fpfc.Changed -= this.OnFPFCChanged;
             var info = new DistanceInformation
             {
-                LevelID = this._difficultyBeatmap.level.levelID,
-                SongName = this._difficultyBeatmap.level.songName,
-                Difficurity = this._difficultyBeatmap.difficulty.ToString(),
+                LevelID = this._beatmapLevel.levelID,
+                SongName = this._beatmapLevel.songName,
+                Difficurity = this._key.difficulty.ToString(),
                 Distance = this._hmdDistance,
                 CreatedAt = DateTime.Now,
             };
-            var include = EnumUtl.TryGetEnumValue<BeatmapCharacteristic>(this._difficultyBeatmap.parentDifficultyBeatmapSet.beatmapCharacteristic.characteristicNameLocalizationKey, out var chara);
+            var include = EnumUtl.TryGetEnumValue<BeatmapCharacteristic>(this._key.beatmapCharacteristic.characteristicNameLocalizationKey, out var chara);
             var bc = _hDTDatabase.Find<BeatmapCharacteristicText>(x => x.BeatmapCharacteristicEnumValue == chara).FirstOrDefault();
             var unknownBc = _hDTDatabase.Find<BeatmapCharacteristicText>(x => x.BeatmapCharacteristicEnumValue == BeatmapCharacteristic.UnknownValue).FirstOrDefault();
             info.BeatmapCharacteristicTextId = include ? bc.ID : unknownBc.ID;
